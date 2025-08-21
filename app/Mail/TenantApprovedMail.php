@@ -20,6 +20,8 @@ class TenantApprovedMail extends Mailable
 
     public function build(): self
     {
+        $loginUrl = $this->buildTenantLoginUrl($this->tenantSlug);
+
         return $this->subject('Your FoundU Tenant Account Details')
             ->view('emails.tenant-approved')
             ->with([
@@ -28,8 +30,29 @@ class TenantApprovedMail extends Mailable
                 'tempPassword' => $this->tempPassword,
                 'tenantSlug' => $this->tenantSlug,
                 'tenantId' => $this->tenantId,
-                'loginUrl' => url('/login'),
+                'loginUrl' => $loginUrl,
             ]);
+    }
+
+    private function buildTenantLoginUrl(string $tenantSlug): string
+    {
+        $baseUrl = config('app.url');
+        $parsed = parse_url($baseUrl) ?: [];
+        $scheme = $parsed['scheme'] ?? 'https';
+        $host = $parsed['host'] ?? null;
+
+        $tenantBaseDomain = env('TENANT_BASE_DOMAIN', $host);
+
+        $invalid = !$tenantBaseDomain
+            || $tenantBaseDomain === 'localhost'
+            || str_contains((string) $tenantBaseDomain, ':')
+            || filter_var((string) $tenantBaseDomain, FILTER_VALIDATE_IP);
+
+        if ($invalid) {
+            return url('/login');
+        }
+
+        return $scheme . '://' . $tenantSlug . '.' . $tenantBaseDomain . '/login';
     }
 }
 

@@ -41,9 +41,12 @@
                 <span>👤</span>
                 Add Tenant Admin
             </a>
-            <a href="{{ route('admin.settings') }}" class="btn btn-outline">
-                <span>⚙️</span>
-                System Settings
+            <a href="{{ route('admin.registration-requests') }}" class="btn btn-warning">
+                <span>📝</span>
+                View Registration Requests
+                @if($pendingRequestsCount > 0)
+                    <span class="badge" style="background: #e53e3e; color: white; padding: 2px 6px; border-radius: 10px; font-size: 11px; margin-left: 8px;">{{ $pendingRequestsCount }}</span>
+                @endif
             </a>
         </div>
     </div>

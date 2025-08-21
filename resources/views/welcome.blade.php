@@ -745,6 +745,27 @@
 		</div>
 	</div>
 
+
+<!-- Pending Approval Modal -->
+<div id="pendingModal" class="modal">
+	<div class="modal-content">
+		<span class="close" onclick="closePendingModal()">&times;</span>
+		<h2 style="font-size: 28px; font-weight: 700; margin-bottom: 8px; text-align: center;">Registration Submitted</h2>
+		<p style="text-align: center; color: var(--muted2); margin-bottom: 16px;">
+			Thank you! Your organization registration is under review.
+		</p>
+		<p style="text-align: center; color: var(--muted2);">
+			An administrator will approve your request and create your Tenant account. You’ll receive an email with your login credentials soon.
+		</p>
+		<div style="margin-top: 24px; text-align: center;">
+			<button class="btn btn-primary" onclick="closePendingModal()">Okay</button>
+		</div>
+	</div>
+</div>
+
+
+	<div id="registrationSubmittedFlag" data-flag="{{ session('registration_submitted') ? '1' : '0' }}" style="display:none"></div>
+
 	<footer class="footer">
 		<div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
 			<div>© {{ date('Y') }} {{ config('app.name', 'FoundU SaaS') }}. All rights reserved.</div>
@@ -765,14 +786,71 @@
 		function closeModal() {
 			document.getElementById('registrationModal').style.display = 'none';
 		}
+
+		function openPendingModal() {
+			document.getElementById('pendingModal').style.display = 'block';
+		}
+
+		function closePendingModal() {
+			document.getElementById('pendingModal').style.display = 'none';
+		}
 		
 		// Close modal when clicking outside of it
 		window.onclick = function(event) {
-			var modal = document.getElementById('registrationModal');
-			if (event.target == modal) {
-				modal.style.display = 'none';
+			var regModal = document.getElementById('registrationModal');
+			var pendingModal = document.getElementById('pendingModal');
+			if (event.target == regModal) {
+				regModal.style.display = 'none';
+			}
+			if (event.target == pendingModal) {
+				pendingModal.style.display = 'none';
 			}
 		}
+
+		// Intercept form submit, send via fetch, then show Pending modal
+		document.addEventListener('DOMContentLoaded', function () {
+			var form = document.getElementById('registrationForm');
+			if (!form) return;
+
+			form.addEventListener('submit', function (e) {
+				e.preventDefault();
+
+				fetch(form.action, {
+					method: 'POST',
+					body: new FormData(form),
+					headers: {
+						'X-CSRF-TOKEN': '{{ csrf_token() }}',
+						'X-Requested-With': 'XMLHttpRequest',
+						'Accept': 'application/json'
+					}
+				})
+				.then(async (res) => {
+					if (res.ok) {
+						document.getElementById('registrationModal').style.display = 'none';
+						openPendingModal();
+						form.reset();
+						return;
+					}
+					if (res.status === 422) {
+						const data = await res.json().catch(() => ({}));
+						const first = data?.errors ? Object.values(data.errors)[0][0] : 'Please check the form and try again.';
+						alert(first);
+						return;
+					}
+					throw new Error('Request failed');
+				})
+				.catch(() => {
+					alert('Something went wrong. Please try again.');
+				});
+			});
+
+			// Fallback: if server-side redirect was used, auto-open based on session flag
+			var submissionFlagElem = document.getElementById('registrationSubmittedFlag');
+			var submissionFlag = submissionFlagElem && submissionFlagElem.getAttribute('data-flag') === '1';
+			if (submissionFlag) {
+				openPendingModal();
+			}
+		});
 	</script>
 </body>
 </html>

@@ -242,6 +242,17 @@
             color: var(--accent);
         }
         
+        .btn-warning {
+            background: #d69e2e;
+            color: white;
+            border: none;
+        }
+        
+        .btn-warning:hover {
+            background: #b7791f;
+            transform: translateY(-2px);
+        }
+        
         /* Grid */
         .grid {
             display: grid;
@@ -399,6 +410,12 @@
                     <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
                         <div class="nav-icon">👥</div>
                         Users
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ route('admin.registration-requests') }}" class="nav-link {{ request()->routeIs('admin.registration-requests*') ? 'active' : '' }}">
+                        <div class="nav-icon">📝</div>
+                        Registration Requests
                     </a>
                 </div>
                 <div class="nav-item">

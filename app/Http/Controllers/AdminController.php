@@ -17,6 +17,7 @@ class AdminController extends Controller
             'userCount' => User::count(),
             'itemCount' => Report::count(),
             'claimsToday' => Claim::whereDate('created_at', today())->count(),
+            'pendingRequestsCount' => \App\Models\TenantRegistrationRequest::where('status', 'pending')->count(),
         ];
 
         return view('admin.dashboard', $data);

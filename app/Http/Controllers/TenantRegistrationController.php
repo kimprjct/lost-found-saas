@@ -20,25 +20,50 @@ class TenantRegistrationController extends Controller
             'organization_name' => 'required|string|max:255',
             'contact_person' => 'required|string|max:255',
             'address' => 'required|string|max:1000',
-            'email' => 'required|email|max:255|unique:tenant_registration_requests,email',
+            'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
             'plan' => 'required|string|in:basic,premium,enterprise',
         ]);
 
-        // Persist while filling optional legacy columns
-        TenantRegistrationRequest::create([
-            'organization_name' => $validated['organization_name'],
-            'contact_person' => $validated['contact_person'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'] ?? null,
-            'organization_type' => 'other',
-            'address' => $validated['address'],
-            'website' => null,
-            'plan' => $validated['plan'],
-            'message' => null,
-        ]);
+        // Upsert: if the email already has a request, update and set back to pending
+        $existing = TenantRegistrationRequest::where('email', $validated['email'])->first();
+        if ($existing) {
+            $existing->fill([
+                'organization_name' => $validated['organization_name'],
+                'contact_person' => $validated['contact_person'],
+                'phone' => $validated['phone'] ?? null,
+                'organization_type' => 'other',
+                'address' => $validated['address'],
+                'website' => null,
+                'plan' => $validated['plan'],
+                'message' => null,
+                'status' => 'pending',
+                'approved_at' => null,
+                'rejected_at' => null,
+                'rejection_reason' => null,
+            ])->save();
+        } else {
+            // Persist while filling optional legacy columns
+            TenantRegistrationRequest::create([
+                'organization_name' => $validated['organization_name'],
+                'contact_person' => $validated['contact_person'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'] ?? null,
+                'organization_type' => 'other',
+                'address' => $validated['address'],
+                'website' => null,
+                'plan' => $validated['plan'],
+                'message' => null,
+            ]);
+        }
 
-        return redirect()->back()->with('success', 'Registration request submitted successfully! We will review your application and contact you within 24-48 hours.');
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Registration request submitted successfully!'], $existing ? 200 : 201);
+        }
+
+        return redirect()->back()
+            ->with('success', 'Registration request submitted successfully! We will review your application and contact you within 24-48 hours.')
+            ->with('registration_submitted', true);
     }
 
     public function index()

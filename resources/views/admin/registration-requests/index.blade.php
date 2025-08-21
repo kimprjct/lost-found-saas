@@ -23,6 +23,25 @@
         </div>
     </div>
 
+    <!-- Process Info -->
+    <div class="card mb-6" style="background: #eff6ff; border: 1px solid #3b82f6;">
+        <h3 style="color: #1e40af; font-weight: 700; margin-bottom: 16px;">📋 How to Process Registration Requests</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+            <div>
+                <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 8px;">1. Review Request</h4>
+                <p style="color: #1e3a8a; font-size: 14px;">Check organization details, contact info, and plan selection</p>
+            </div>
+            <div>
+                <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 8px;">2. Approve & Create Account</h4>
+                <p style="color: #1e40af; font-size: 14px;">Click "Approve" to automatically create tenant account and admin user</p>
+            </div>
+            <div>
+                <h4 style="color: #1e40af; font-weight: 600; margin-bottom: 8px;">3. Share Credentials</h4>
+                <p style="color: #1e40af; font-size: 14px;">Credentials will be emailed to the organization admin automatically</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Requests Table -->
     <div class="card">
         <div class="table-container">
