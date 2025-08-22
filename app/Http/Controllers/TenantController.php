@@ -14,6 +14,12 @@ class TenantController extends Controller
     {
         $user = Auth::user();
         $tenantId = $user->tenant_id;
+        $tenant = $user->tenant;
+
+        // Redirect to setup if not completed
+        if (!$tenant->setup_completed) {
+            return redirect()->route('tenant.setup.show');
+        }
 
         $lostCount = Report::where('tenant_id', $tenantId)->where('status', 'lost')->count();
         $foundCount = Report::where('tenant_id', $tenantId)->where('status', 'found')->count();

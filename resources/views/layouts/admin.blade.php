@@ -396,31 +396,26 @@
             <nav class="nav-menu">
                 <div class="nav-item">
                     <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                        <div class="nav-icon">📊</div>
                         Dashboard
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="{{ route('tenants.index') }}" class="nav-link {{ request()->routeIs('tenants.*') ? 'active' : '' }}">
-                        <div class="nav-icon">🏢</div>
                         Tenants
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                        <div class="nav-icon">👥</div>
                         Users
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="{{ route('admin.registration-requests') }}" class="nav-link {{ request()->routeIs('admin.registration-requests*') ? 'active' : '' }}">
-                        <div class="nav-icon">📝</div>
                         Registration Requests
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="{{ route('admin.settings') }}" class="nav-link {{ request()->routeIs('admin.settings') ? 'active' : '' }}">
-                        <div class="nav-icon">⚙️</div>
                         Settings
                     </a>
                 </div>

@@ -46,6 +46,10 @@ Route::prefix('tenant')->as('tenant.')->middleware(['auth', 'role:tenant_admin,s
 	Route::resource('found-items', FoundItemController::class);
 	Route::resource('claims', ClaimController::class);
 	Route::resource('staff', StaffController::class);
+	
+	// Tenant Setup Routes
+	Route::get('/setup', [App\Http\Controllers\TenantSetupController::class, 'show'])->name('setup.show');
+	Route::post('/setup', [App\Http\Controllers\TenantSetupController::class, 'update'])->name('setup.update');
 });
 
 require __DIR__.'/auth.php';

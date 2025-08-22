@@ -15,6 +15,17 @@ class Tenant extends Model
         'domain',
         'logo',
         'address',
+        'contact_email',
+        'contact_phone',
+        'claim_process_rules',
+        'verification_steps',
+        'setup_completed',
+        'setup_completed_at',
+    ];
+
+    protected $casts = [
+        'setup_completed' => 'boolean',
+        'setup_completed_at' => 'datetime',
     ];
 
     public function users(): HasMany
@@ -25,5 +36,10 @@ class Tenant extends Model
     public function reports(): HasMany
     {
         return $this->hasMany(Report::class);
+    }
+
+    public function staffInvitations(): HasMany
+    {
+        return $this->hasMany(StaffInvitation::class);
     }
 }
