@@ -19,9 +19,30 @@
             --success: #38a169;
             --warning: #d69e2e;
             --danger: #e53e3e;
-            --sidebar-bg: #1a202c;
-            --sidebar-text: #e2e8f0;
-            --sidebar-hover: #2d3748;
+            --sidebar-bg: #ffffff;
+            --sidebar-text: #1f2937;
+            --sidebar-hover: #f3f4f6;
+            --sidebar-border: #e5e7eb;
+        }
+
+        /* Dark mode variables */
+        .dark {
+            --bg-primary: #0f172a;
+            --bg-secondary: #111827;
+            --text-primary: #e5e7eb;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --border-light: #1f2937;
+            --accent: #60a5fa;
+            --accent-hover: #3b82f6;
+            --success: #34d399;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --sidebar-bg: #0b1220;
+            --sidebar-text: #e5e7eb;
+            --sidebar-hover: #0f172a;
+            --sidebar-border: #1f2937;
         }
         
         * {
@@ -44,18 +65,19 @@
         
         /* Sidebar */
         .sidebar {
-            width: 280px;
+            width: 260px;
             background: var(--sidebar-bg);
-            padding: 24px 0;
+            padding: 16px 0;
             position: fixed;
             height: 100vh;
             overflow-y: auto;
+            border-right: 1px solid var(--sidebar-border);
         }
         
         .sidebar-header {
-            padding: 0 24px 24px;
-            border-bottom: 1px solid #2d3748;
-            margin-bottom: 24px;
+            padding: 0 20px 16px;
+            border-bottom: 1px solid var(--sidebar-border);
+            margin-bottom: 12px;
         }
         
         .brand {
@@ -86,7 +108,7 @@
         }
         
         .nav-menu {
-            padding: 0 16px;
+            padding: 0 8px;
         }
         
         .nav-item {
@@ -96,8 +118,8 @@
         .nav-link {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
+            gap: 10px;
+            padding: 10px 12px;
             color: var(--sidebar-text);
             text-decoration: none;
             border-radius: 8px;
@@ -107,12 +129,13 @@
         
         .nav-link:hover {
             background: var(--sidebar-hover);
-            color: white;
+            color: var(--text-primary);
         }
         
         .nav-link.active {
-            background: var(--accent);
-            color: white;
+            background: #eef2ff;
+            color: var(--accent);
+            border: 1px solid #dbeafe;
         }
         
         .nav-icon {
@@ -126,7 +149,7 @@
         /* Main Content */
         .main-content {
             flex: 1;
-            margin-left: 280px;
+            margin-left: 260px;
             min-height: 100vh;
             position: relative;
             background: var(--bg-primary);
@@ -135,10 +158,18 @@
         .header {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
-            padding: 20px 32px;
+            padding: 16px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
         }
         
         .page-title {
@@ -187,6 +218,20 @@
             padding: 32px;
             background: var(--bg-primary);
         }
+
+        /* Footer */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 24px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+        .footer a { color: var(--text-secondary); text-decoration: none; margin-right: 16px; }
+        .footer a:hover { color: var(--accent); }
+        .footer-icons { display: flex; gap: 14px; color: var(--text-muted); }
         
         /* Cards */
         .card {
@@ -401,7 +446,7 @@
                 </div>
                 <div class="nav-item">
                     <a href="{{ route('tenants.index') }}" class="nav-link {{ request()->routeIs('tenants.*') ? 'active' : '' }}">
-                        Tenants
+                        Organizations
                     </a>
                 </div>
                 <div class="nav-item">
@@ -427,6 +472,7 @@
             <header class="header">
                 <h1 class="page-title">@yield('header')</h1>
                 <div class="user-menu">
+                    <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">🌓</button>
                     <div class="user-info">
                         <div class="user-name">{{ auth()->user()->name }}</div>
                         <div class="user-role">Super Admin</div>
@@ -441,7 +487,31 @@
             <div class="content-area">
                 @yield('content')
             </div>
+
+            <footer class="footer">
+                <div>
+                    <a href="#">Quick Links</a>
+                    <a href="#">Legal</a>
+                </div>
+                <div class="footer-icons">
+                    <span>⚙️</span>
+                    <span>🔔</span>
+                    <span>❓</span>
+                </div>
+            </footer>
         </main>
     </div>
+<script>
+    (function() {
+        const root = document.documentElement;
+        const toggle = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('admin-theme');
+        if (saved === 'dark') root.classList.add('dark');
+        toggle && toggle.addEventListener('click', function() {
+            root.classList.toggle('dark');
+            localStorage.setItem('admin-theme', root.classList.contains('dark') ? 'dark' : 'light');
+        });
+    })();
+</script>
 </body>
 </html>
