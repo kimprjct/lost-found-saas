@@ -10,6 +10,7 @@ use App\Http\Controllers\FoundItemController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TenantRegistrationController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 // Home route -> public welcome page or appropriate dashboard if already authenticated
 Route::get('/', function () {
@@ -51,5 +52,9 @@ Route::prefix('tenant')->as('tenant.')->middleware(['auth', 'role:tenant_admin,s
 	Route::get('/setup', [App\Http\Controllers\TenantSetupController::class, 'show'])->name('setup.show');
 	Route::post('/setup', [App\Http\Controllers\TenantSetupController::class, 'update'])->name('setup.update');
 });
+
+// Logout Route
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
 
 require __DIR__.'/auth.php';

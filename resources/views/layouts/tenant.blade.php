@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -727,10 +726,13 @@
             
             <!-- Logout Button -->
             <div class="sidebar-footer">
-                <button class="logout-sidebar-btn" onclick="logout()">
-                    <div class="nav-icon">🚪</div>
-                    Logout
-                </button>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="logout-sidebar-btn">
+                        <div class="nav-icon">🚪</div>
+                        Logout
+                    </button>
+                </form>
             </div>
         </aside>
 
@@ -765,7 +767,7 @@
     <script>
     function logout() {
         if (confirm('Are you sure you want to logout?')) {
-            window.location.href = '{{ route("logout") }}';
+            document.getElementById('logout-form').submit();
         }
     }
     </script>
