@@ -163,13 +163,45 @@
             justify-content: space-between;
             align-items: center;
         }
-        .theme-toggle {
+        .theme-toggle, .notification-btn {
             background: transparent;
             border: 1px solid var(--border);
             color: var(--text-secondary);
             padding: 6px 10px;
             border-radius: 8px;
             cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .theme-toggle:hover, .notification-btn:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        
+        .search-input {
+            width: 300px;
+            padding: 8px 12px 8px 40px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: var(--text-muted);
         }
         
         .page-title {
@@ -470,9 +502,18 @@
         <!-- Main Content -->
         <main class="main-content">
             <header class="header">
-                <h1 class="page-title">@yield('header')</h1>
+                <div class="flex items-center space-x-4">
+                    <h1 class="page-title">@yield('header')</h1>
+                    <div class="relative">
+                        <input type="text" placeholder="Search items or users..." class="search-input">
+                        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
                 <div class="user-menu">
                     <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">🌓</button>
+                    <button class="notification-btn" title="Notifications">🔔</button>
                     <div class="user-info">
                         <div class="user-name">{{ auth()->user()->name }}</div>
                         <div class="user-role">Super Admin</div>
@@ -513,5 +554,6 @@
         });
     })();
 </script>
+@stack('scripts')
 </body>
 </html>

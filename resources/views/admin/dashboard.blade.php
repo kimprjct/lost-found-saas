@@ -6,91 +6,247 @@
 @endsection
 
 @section('content')
-    <!-- Top metrics -->
-    <div class="grid grid-cols-4 gap-6 mb-8">
-        <div class="card stat-card">
-            <div class="stat-number">{{ number_format($tenantCount ?? 0) }}</div>
-            <div class="stat-label">Total Organizations Registered</div>
+    <!-- Dashboard Overview Section -->
+    <div class="mb-8">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard Overview</h2>
+                <p class="text-gray-600 dark:text-gray-400">Overview</p>
+            </div>
         </div>
+        
+        <!-- Metrics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
+            <!-- Total Lost Items -->
+            <div class="card stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="stat-number text-blue-600">{{ number_format($lostItemsCount ?? 1245) }}</div>
+                        <div class="stat-label">Total Lost Items</div>
+                        <div class="text-sm text-green-600 font-medium">+20.7% from last month</div>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Found Items -->
+            <div class="card stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="stat-number text-green-600">{{ number_format($foundItemsCount ?? 852) }}</div>
+                        <div class="stat-label">Total Found Items</div>
+                        <div class="text-sm text-green-600 font-medium">+15.8% from last month</div>
+                    </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Verifications -->
+            <div class="card stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="stat-number text-orange-600">{{ number_format($pendingVerificationsCount ?? 42) }}</div>
+                        <div class="stat-label">Pending Verifications</div>
+                        <div class="text-sm text-gray-600">Currently reviewing</div>
+                    </div>
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Claimed Items -->
         <div class="card stat-card">
-            <div class="stat-number">{{ number_format($userCount ?? 0) }}</div>
-            <div class="stat-label">Active Users (All Orgs)</div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="stat-number text-green-600">{{ number_format($claimedItemsCount ?? 789) }}</div>
+                        <div class="stat-label">Claimed Items</div>
+                        <div class="text-sm text-gray-600">78% of found items claimed</div>
+                    </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                </div>
         </div>
+
+            <!-- Unclaimed Items -->
         <div class="card stat-card">
-            <div class="stat-number">{{ number_format($itemCount ?? 0) }}</div>
-            <div class="stat-label">Total Lost/Found Items</div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="stat-number text-red-600">{{ number_format($unclaimedItemsCount ?? 63) }}</div>
+                        <div class="stat-label">Unclaimed Items</div>
+                        <div class="text-sm text-gray-600">Awaiting owner contact</div>
+                    </div>
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                </div>
         </div>
+
+            <!-- Active Users -->
         <div class="card stat-card">
-            <div class="stat-number">{{ number_format($pendingRequestsCount ?? 0) }}</div>
-            <div class="stat-label">Pending Organization Approvals</div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="stat-number text-purple-600">{{ number_format($activeUsersCount ?? 234) }}</div>
+                        <div class="stat-label">Active Users</div>
+                        <div class="text-sm text-green-600 font-medium">+5.2% from last month</div>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Charts -->
-    <div class="grid grid-cols-2 gap-6 mb-8">
+    <!-- Performance Overview Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <!-- Monthly Item Activity Chart -->
         <div class="card">
-            <div style="font-weight:700; color: var(--text-primary); margin-bottom: 12px;">Items Reported Over Time</div>
-            <svg viewBox="0 0 600 260" width="100%" height="260" role="img" aria-label="Items over time area chart">
-                <rect x="0" y="0" width="600" height="260" fill="#ffffff" />
-                <g stroke="#e2e8f0">
-                    <line x1="50" y1="220" x2="580" y2="220" />
-                    <line x1="50" y1="180" x2="580" y2="180" />
-                    <line x1="50" y1="140" x2="580" y2="140" />
-                    <line x1="50" y1="100" x2="580" y2="100" />
-                    <line x1="50" y1="60" x2="580" y2="60" />
-                </g>
-                <path d="M50 220 L90 200 L130 210 L170 180 L210 170 L250 150 L290 140 L330 120 L370 110 L410 95 L450 80 L490 70 L530 60 L580 50 L580 220 L50 220 Z" fill="rgba(49,130,206,0.25)" stroke="rgba(49,130,206,0.6)" stroke-width="2" />
-                <g fill="#718096" font-size="10">
-                    <text x="70" y="238">Jan</text>
-                    <text x="130" y="238">Feb</text>
-                    <text x="190" y="238">Mar</text>
-                    <text x="250" y="238">Apr</text>
-                    <text x="310" y="238">May</text>
-                    <text x="370" y="238">Jun</text>
-                    <text x="430" y="238">Jul</text>
-                    <text x="490" y="238">Aug</text>
-                    <text x="550" y="238">Sep</text>
-                </g>
-            </svg>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Monthly Item Activity</h3>
+            <div class="relative" style="height: 300px;">
+                <canvas id="monthlyActivityChart"></canvas>
+            </div>
         </div>
+
+        <!-- Claim Resolution Rate Chart -->
         <div class="card">
-            <div style="font-weight:700; color: var(--text-primary); margin-bottom: 12px;">Claims Made Over Time</div>
-            <svg viewBox="0 0 600 260" width="100%" height="260" role="img" aria-label="Claims over time area chart">
-                <rect x="0" y="0" width="600" height="260" fill="#ffffff" />
-                <g stroke="#e2e8f0">
-                    <line x1="50" y1="220" x2="580" y2="220" />
-                    <line x1="50" y1="180" x2="580" y2="180" />
-                    <line x1="50" y1="140" x2="580" y2="140" />
-                    <line x1="50" y1="100" x2="580" y2="100" />
-                    <line x1="50" y1="60" x2="580" y2="60" />
-                </g>
-                <path d="M50 220 L90 210 L130 205 L170 190 L210 175 L250 160 L290 150 L330 135 L370 120 L410 110 L450 95 L490 80 L530 70 L580 55 L580 220 L50 220 Z" fill="rgba(56,161,105,0.25)" stroke="rgba(56,161,105,0.6)" stroke-width="2" />
-                <g fill="#718096" font-size="10">
-                    <text x="70" y="238">Jan</text>
-                    <text x="130" y="238">Feb</text>
-                    <text x="190" y="238">Mar</text>
-                    <text x="250" y="238">Apr</text>
-                    <text x="310" y="238">May</text>
-                    <text x="370" y="238">Jun</text>
-                    <text x="430" y="238">Jul</text>
-                    <text x="490" y="238">Aug</text>
-                    <text x="550" y="238">Sep</text>
-                </g>
-            </svg>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Claim Resolution Rate</h3>
+            <div class="relative" style="height: 300px;">
+                <canvas id="claimResolutionChart"></canvas>
+            </div>
         </div>
     </div>
 
-    <!-- Quick Links -->
+    <!-- Recent Activities Section -->
     <div class="card">
-        <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 12px;">
-            <div style="font-weight:700; color: var(--text-primary);">Quick Links</div>
-            <div style="color: var(--text-muted); font-size:12px;">Shortcuts</div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Activities</h3>
+        <div class="space-y-4">
+            <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <div class="flex-1">
+                    <p class="text-sm text-gray-900 dark:text-white">John Doe reported a lost laptop.</p>
+                    <p class="text-xs text-gray-500">2 minutes ago</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                <div class="flex-1">
+                    <p class="text-sm text-gray-900 dark:text-white">Claim #1234 for wallet approved by Admin.</p>
+                    <p class="text-xs text-gray-500">1 hour ago</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <div class="flex-1">
+                    <p class="text-sm text-gray-900 dark:text-white">New user registered: Jane Smith.</p>
+                    <p class="text-xs text-gray-500">3 hours ago</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <div class="flex-1">
+                    <p class="text-sm text-gray-900 dark:text-white">Found item 'Keys' processed at Main Lobby.</p>
+                    <p class="text-xs text-gray-500">Yesterday</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                <div class="flex-1">
+                    <p class="text-sm text-gray-900 dark:text-white">Pending verification for 'Smartphone' escalated.</p>
+                    <p class="text-xs text-gray-500">2 days ago</p>
+                </div>
         </div>
-        <div class="grid grid-cols-4 gap-6">
-            <a href="{{ route('tenants.create') }}" class="btn btn-primary">New Organization</a>
-            <a href="{{ route('users.create') }}" class="btn btn-accent">Add User</a>
-            <a href="{{ route('admin.registration-requests') }}" class="btn btn-warning">Approvals @if(($pendingRequestsCount ?? 0) > 0)<span class="badge" style="margin-left:8px; background: var(--danger); color: #fff;">{{ $pendingRequestsCount }}</span>@endif</a>
-            <a href="{{ route('tenants.index') }}" class="btn btn-outline">View Organizations</a>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Monthly Item Activity Chart
+    const monthlyCtx = document.getElementById('monthlyActivityChart').getContext('2d');
+    new Chart(monthlyCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Lost Items',
+                data: [280, 200, 320, 180, 220, 150, 190, 160, 240, 300, 310, 250],
+                backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                borderColor: 'rgba(59, 130, 246, 1)',
+                borderWidth: 1
+            }, {
+                label: 'Found Items',
+                data: [180, 150, 220, 120, 160, 100, 140, 110, 180, 220, 240, 190],
+                backgroundColor: 'rgba(34, 197, 94, 0.8)',
+                borderColor: 'rgba(34, 197, 94, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 320
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            }
+        }
+    });
+
+    // Claim Resolution Rate Chart
+    const resolutionCtx = document.getElementById('claimResolutionChart').getContext('2d');
+    new Chart(resolutionCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Approved Claims', 'Pending Claims'],
+            datasets: [{
+                data: [78, 22],
+                backgroundColor: [
+                    'rgba(15, 118, 110, 0.8)',
+                    'rgba(245, 158, 11, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(15, 118, 110, 1)',
+                    'rgba(245, 158, 11, 1)'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+});
+</script>
+@endpush
