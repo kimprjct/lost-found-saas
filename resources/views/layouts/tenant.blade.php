@@ -107,6 +107,37 @@
             font-weight: 500;
         }
         
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 28px 24px;
+            background: white;
+        }
+        
+        .profile-avatar {
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-avatar .avatar-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid #dc3545;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+        
+        .profile-name {
+            font-weight: 600;
+            color: #000000;
+            font-size: 18px;
+        }
+        
         .nav-menu {
             padding: 16px 0;
             flex: 1;
@@ -126,7 +157,7 @@
             border-radius: 0;
             transition: all 0.2s ease;
             font-weight: 400;
-            font-size: 14px;
+            font-size: 18px;
             margin-bottom: 0;
         }
         
@@ -262,8 +293,8 @@
             text-decoration: none;
             border-radius: 8px;
             transition: all 0.2s ease;
-            font-weight: 500;
-            font-size: 14px;
+            font-weight: 600;
+            font-size: 16px;
             background: transparent;
             border: none;
             cursor: pointer;
@@ -283,14 +314,14 @@
         }
         
         .search-input {
-            width: 300px;
-            padding: 8px 12px 8px 40px;
+            width: 400px;
+            padding: 16px 20px 16px 50px;
             border: 1px solid var(--gray-300);
             border-radius: 8px;
             background: white;
             color: var(--gray-900);
-            font-size: 14px;
-            margin-left: 890px;
+            font-size: 18px;
+            margin-left: 1020px;
             margin-bottom: 36px;
             margin-top: 40px;
             align-items: center;
@@ -666,62 +697,60 @@
                 </div>
             </div>
             
+            <!-- Profile Section -->
+            <div class="profile-section">
+                <div class="profile-avatar">
+                    <div class="avatar-circle">
+                        <div class="avatar-image">👤</div>
+                    </div>
+                </div>
+                <div class="profile-name">KRK</div>
+            </div>
+            
             <nav class="nav-menu">
                 <div class="nav-item">
                     <a href="{{ route('tenant.dashboard') }}" class="nav-link {{ request()->routeIs('tenant.dashboard') ? 'active' : '' }}">
-                        <div class="nav-icon">📋</div>
                         Dashboard
                     </a>
                 </div>
               
                 <div class="nav-item">
                     <a href="{{ route('tenant.lost-items.index') }}" class="nav-link {{ request()->routeIs('tenant.lost-items.*') ? 'active' : '' }}">
-                        <div class="nav-icon">📦</div>
                         Manage Lost Items
                     </a>
                 </div>
                 
                 <div class="nav-item">
                     <a href="{{ route('tenant.found-items.index') }}" class="nav-link {{ request()->routeIs('tenant.found-items.*') ? 'active' : '' }}">
-                        <div class="nav-icon">📦</div>
                         Manage Found Items
                     </a>
                 </div>
                 
                 <div class="nav-item">
                     <a href="{{ route('tenant.claims.index') }}" class="nav-link {{ request()->routeIs('tenant.claims.*') ? 'active' : '' }}">
-                        <div class="nav-icon">🔔</div>
                         Claim Requests
                     </a>
                 </div>
                 
                 <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <div class="nav-icon">🔍</div>
-                        Found It Requests
+                    <a href="{{ route('tenant.found-requests.index') }}" class="nav-link {{ request()->routeIs('tenant.found-requests.*') ? 'active' : '' }}">
+                        Found Requests
                     </a>
                 </div>
                 
                 <div class="nav-item">
-                    <a href="{{ route('tenant.staff.index') }}" class="nav-link {{ request()->routeIs('tenant.staff.*') ? 'active' : '' }}">
-                        <div class="nav-icon">👥</div>
+                    <a href="{{ route('tenant.user-management.index') }}" class="nav-link {{ request()->routeIs('tenant.user-management.*') ? 'active' : '' }}">
                         User Management
                     </a>
                 </div>
                 
                 <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <div class="nav-icon">🕒</div>
+                    <a href="{{ route('tenant.claim-history.index') }}" class="nav-link {{ request()->routeIs('tenant.claim-history.*') ? 'active' : '' }}">
                         Claim History
                     </a>
                 </div>
                 
-                <div class="nav-item">
-                    <a href="#" class="nav-link">
-                        <div class="nav-icon">📊</div>
-                        Reports & Analytics
-                    </a>
-                </div>
+               
             </nav>
             
             <!-- Logout Button -->
@@ -729,7 +758,6 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="logout-sidebar-btn">
-                        <div class="nav-icon">🚪</div>
                         Logout
                     </button>
                 </form>
@@ -742,8 +770,7 @@
                 <div class="flex items-center space-x-4">
                 <h1 class="page-title">@yield('header')</h1>
                     <div class="relative">
-                        <input type="text" placeholder="Search items or users..." class="search-input">
-                        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </div>

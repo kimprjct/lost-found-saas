@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Claim;
 
-class ClaimController extends Controller
+class ClaimHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class ClaimController extends Controller
     {
         // For now, return the view with sample data
         // Later this should fetch from database
-        return view('tenant.claims.index');
+        return view('tenant.claim-history.index');
     }
 
     /**
@@ -22,7 +21,7 @@ class ClaimController extends Controller
      */
     public function create()
     {
-        return view('tenant.claims.create');
+        return view('tenant.claim-history.create');
     }
 
     /**
@@ -31,17 +30,17 @@ class ClaimController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'claim_id' => 'required|string|max:255',
             'item_name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'claimant_name' => 'required|string|max:255',
-            'location_found' => 'nullable|string|max:255',
-            'contact_info' => 'nullable|string|max:255',
+            'claimant' => 'required|string|max:255',
+            'claim_date' => 'required|date',
+            'claim_status' => 'required|in:completed,pending,cancelled',
         ]);
 
         // For now, just redirect back with success message
         // Later this should save to database
-        return redirect()->route('tenant.claims.index')
-            ->with('success', 'Claim request created successfully.');
+        return redirect()->route('tenant.claim-history.index')
+            ->with('success', 'Claim history record created successfully.');
     }
 
     /**
@@ -50,8 +49,8 @@ class ClaimController extends Controller
     public function show(string $id)
     {
         // For now, redirect to index
-        // Later this should show individual claim details
-        return redirect()->route('tenant.claims.index');
+        // Later this should show individual claim history details
+        return redirect()->route('tenant.claim-history.index');
     }
 
     /**
@@ -60,18 +59,17 @@ class ClaimController extends Controller
     public function edit(string $id)
     {
         // For now, return the edit view with sample data
-        // Later this should fetch the claim from database
-        $claim = (object) [
+        // Later this should fetch the claim history from database
+        $claimHistory = (object) [
             'id' => $id,
+            'claim_id' => '1',
             'item_name' => 'Sample Item',
-            'description' => 'Sample description',
-            'claimant_name' => 'Sample Claimant',
-            'location_found' => 'Sample Location',
-            'contact_info' => 'Sample Contact',
-            'verification_status' => 'pending'
+            'claimant' => 'Sample Claimant',
+            'claim_date' => '2024-09-24',
+            'claim_status' => 'completed'
         ];
         
-        return view('tenant.claims.edit', compact('claim'));
+        return view('tenant.claim-history.edit', compact('claimHistory'));
     }
 
     /**
@@ -80,18 +78,17 @@ class ClaimController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
+            'claim_id' => 'required|string|max:255',
             'item_name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'claimant_name' => 'required|string|max:255',
-            'location_found' => 'nullable|string|max:255',
-            'contact_info' => 'nullable|string|max:255',
-            'verification_status' => 'required|in:pending,verified,rejected',
+            'claimant' => 'required|string|max:255',
+            'claim_date' => 'required|date',
+            'claim_status' => 'required|in:completed,pending,cancelled',
         ]);
 
         // For now, just redirect back with success message
         // Later this should update the database
-        return redirect()->route('tenant.claims.index')
-            ->with('success', 'Claim request updated successfully.');
+        return redirect()->route('tenant.claim-history.index')
+            ->with('success', 'Claim history record updated successfully.');
     }
 
     /**
@@ -101,7 +98,7 @@ class ClaimController extends Controller
     {
         // For now, just redirect back with success message
         // Later this should delete from database
-        return redirect()->route('tenant.claims.index')
-            ->with('success', 'Claim request deleted successfully.');
+        return redirect()->route('tenant.claim-history.index')
+            ->with('success', 'Claim history record deleted successfully.');
     }
 }

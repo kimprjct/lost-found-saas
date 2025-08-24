@@ -2,7 +2,7 @@
 @extends('layouts.tenant')
 
 @section('header')
-    Dashboard
+    
 @endsection
 
 @section('content')

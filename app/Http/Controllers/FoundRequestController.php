@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Claim;
 
-class ClaimController extends Controller
+class FoundRequestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class ClaimController extends Controller
     {
         // For now, return the view with sample data
         // Later this should fetch from database
-        return view('tenant.claims.index');
+        return view('tenant.found-requests.index');
     }
 
     /**
@@ -22,7 +21,7 @@ class ClaimController extends Controller
      */
     public function create()
     {
-        return view('tenant.claims.create');
+        return view('tenant.found-requests.create');
     }
 
     /**
@@ -33,15 +32,16 @@ class ClaimController extends Controller
         $validated = $request->validate([
             'item_name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'claimant_name' => 'required|string|max:255',
+            'found_by' => 'required|string|max:255',
             'location_found' => 'nullable|string|max:255',
             'contact_info' => 'nullable|string|max:255',
+            'date_found' => 'nullable|date',
         ]);
 
         // For now, just redirect back with success message
         // Later this should save to database
-        return redirect()->route('tenant.claims.index')
-            ->with('success', 'Claim request created successfully.');
+        return redirect()->route('tenant.found-requests.index')
+            ->with('success', 'Found request created successfully.');
     }
 
     /**
@@ -50,8 +50,8 @@ class ClaimController extends Controller
     public function show(string $id)
     {
         // For now, redirect to index
-        // Later this should show individual claim details
-        return redirect()->route('tenant.claims.index');
+        // Later this should show individual found request details
+        return redirect()->route('tenant.found-requests.index');
     }
 
     /**
@@ -60,18 +60,19 @@ class ClaimController extends Controller
     public function edit(string $id)
     {
         // For now, return the edit view with sample data
-        // Later this should fetch the claim from database
-        $claim = (object) [
+        // Later this should fetch the found request from database
+        $foundRequest = (object) [
             'id' => $id,
             'item_name' => 'Sample Item',
             'description' => 'Sample description',
-            'claimant_name' => 'Sample Claimant',
+            'found_by' => 'Sample Finder',
             'location_found' => 'Sample Location',
             'contact_info' => 'Sample Contact',
+            'date_found' => '2024-09-29',
             'verification_status' => 'pending'
         ];
         
-        return view('tenant.claims.edit', compact('claim'));
+        return view('tenant.found-requests.edit', compact('foundRequest'));
     }
 
     /**
@@ -82,16 +83,17 @@ class ClaimController extends Controller
         $validated = $request->validate([
             'item_name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'claimant_name' => 'required|string|max:255',
+            'found_by' => 'required|string|max:255',
             'location_found' => 'nullable|string|max:255',
             'contact_info' => 'nullable|string|max:255',
+            'date_found' => 'nullable|date',
             'verification_status' => 'required|in:pending,verified,rejected',
         ]);
 
         // For now, just redirect back with success message
         // Later this should update the database
-        return redirect()->route('tenant.claims.index')
-            ->with('success', 'Claim request updated successfully.');
+        return redirect()->route('tenant.found-requests.index')
+            ->with('success', 'Found request updated successfully.');
     }
 
     /**
@@ -101,7 +103,7 @@ class ClaimController extends Controller
     {
         // For now, just redirect back with success message
         // Later this should delete from database
-        return redirect()->route('tenant.claims.index')
-            ->with('success', 'Claim request deleted successfully.');
+        return redirect()->route('tenant.found-requests.index')
+            ->with('success', 'Found request deleted successfully.');
     }
 }

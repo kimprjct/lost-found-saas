@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')
-<div class="claim-requests-container">
+<div class="found-requests-container">
 
     <!-- Title -->
-    <h2 class="page-title">Claim Requests</h2>
+    <h2 class="page-title">Found Requests</h2>
 
     <!-- Search (straight ubos sa title) -->
     <div class="search-bar-container">
@@ -17,13 +17,13 @@
 
     <!-- Table -->
     <div class="table-wrapper">
-        <table class="claim-requests-table">
+        <table class="found-requests-table">
             <thead>
                 <tr>
-                    <th>Claim ID</th>
+                    <th>Item ID</th>
                     <th>Item Name</th>
-                    <th>Claim Date</th>
-                    <th>Claimant</th>
+                    <th>Date Found</th>
+                    <th>Found by</th>
                     <th>Location Found</th>
                     <th>Image</th>
                     <th>Verification Status</th>
@@ -33,9 +33,9 @@
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td>Red Record Book</td>
+                    <td>Key</td>
                     <td>Sept. 29, 2024</td>
-                    <td>Maria Jose</td>
+                    <td>Abigail Smith</td>
                     <td>EB Room 208</td>
                     <td><img src="https://via.placeholder.com/50" alt="Item" class="item-image" /></td>
                     <td class="status-verified">Verified</td>
@@ -46,10 +46,10 @@
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td>Money</td>
+                    <td>Coach wallet Black</td>
                     <td>Sept. 24, 2024</td>
-                    <td>Aighyne Pareja</td>
-                    <td>Stair sa exit</td>
+                    <td>Trisha Uy</td>
+                    <td>SNSU Gym</td>
                     <td><img src="https://via.placeholder.com/50" alt="Item" class="item-image" /></td>
                     <td class="status-verified">Verified</td>
                     <td class="action-buttons">
@@ -59,10 +59,10 @@
                 </tr>
                 <tr>
                     <td>3</td>
-                    <td>Phone Case</td>
+                    <td>Cellphone</td>
                     <td>Sept. 25, 2024</td>
-                    <td>Charity Rama</td>
-                    <td>EB Room 209</td>
+                    <td>Kimby Pareja</td>
+                    <td>LRC</td>
                     <td><img src="https://via.placeholder.com/50" alt="Item" class="item-image" /></td>
                     <td class="status-pending">Pending</td>
                     <td class="action-buttons">
@@ -72,10 +72,10 @@
                 </tr>
                 <tr>
                     <td>4</td>
-                    <td>Umbrella</td>
+                    <td>Flash drive</td>
                     <td>Sept. 26, 2024</td>
-                    <td>SolieL Riego</td>
-                    <td>Canteen</td>
+                    <td>Kim Talictic</td>
+                    <td>EB Room 310</td>
                     <td><img src="https://via.placeholder.com/50" alt="Item" class="item-image" /></td>
                     <td class="status-rejected">Rejected</td>
                     <td class="action-buttons">
@@ -110,7 +110,7 @@
 }
 
 /* table styling */
-.claim-requests-table {
+.found-requests-table {
     width: 104%;
     border-collapse: collapse;
     font-size: 18px;
@@ -118,29 +118,29 @@
     margin-left: -30px;
 }
 
-.claim-requests-table thead {
+.found-requests-table thead {
     background-color: rgb(88, 173, 247);
     color: black;
 }
 
-.claim-requests-table th,
-.claim-requests-table td {
+.found-requests-table th,
+.found-requests-table td {
     padding: 17px;
     border-left: none;
     border-right: none;
     border-bottom: 1px solid #ccc;
 }
 
-.claim-requests-table th {
+.found-requests-table th {
     font-weight: bold;
     text-transform: uppercase;
 }
 
-.claim-requests-table tbody tr:nth-child(even) {
+.found-requests-table tbody tr:nth-child(even) {
     background-color: rgb(255, 253, 253);
 }
 
-.claim-requests-table tbody tr:hover {
+.found-requests-table tbody tr:hover {
     background-color: rgb(218, 218, 219);
 }
 

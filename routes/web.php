@@ -8,6 +8,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LostItemController;
 use App\Http\Controllers\FoundItemController;
 use App\Http\Controllers\ClaimController;
+use App\Http\Controllers\FoundRequestController;
+use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\ClaimHistoryController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TenantRegistrationController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -46,6 +49,9 @@ Route::prefix('tenant')->as('tenant.')->middleware(['auth', 'role:tenant_admin,s
 	Route::resource('lost-items', LostItemController::class);
 	Route::resource('found-items', FoundItemController::class);
 	Route::resource('claims', ClaimController::class);
+	Route::resource('found-requests', FoundRequestController::class);
+	Route::resource('user-management', UserManagementController::class);
+	Route::resource('claim-history', ClaimHistoryController::class);
 	Route::resource('staff', StaffController::class);
 	
 	// Tenant Setup Routes
